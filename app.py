@@ -1,10 +1,11 @@
 from flask import Flask, jsonify, request,send_file
+from flask_cors import CORS, cross_origin
 from decimal import Decimal, ROUND_HALF_UP
 import random
 import math
 
 app = Flask(__name__)
-
+CORS(app)
 @app.route('/hello', methods=["GET"])
 
 def hello():
@@ -17,8 +18,9 @@ def hello():
     return jsonify({"message": text})
 
 @app.route('/generate', methods=["GET"])
-
+@cross_origin()
 def generate():
+    
     # Prob A
     probPocoVientoAArray = [
         float(request.args.get('probPocoVientoA_1')),
