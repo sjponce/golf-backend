@@ -126,7 +126,7 @@ def generate():
     # Cantidad de partidos
     partidos = []
     for i in range(0, cantidadSimulaciones):
-        partidos.append([])
+        partidos.append(None)
         sets = []
 
         for j in range(0, cantSet):
@@ -216,8 +216,8 @@ def generate():
                 "numeroGolpesCList": numeroGolpesCList,
             }
             sets[j].append(fila)
-        partidos[i].append(sets)
-
+        partidos[i] = sets
+        print(i)
     return jsonify({"partidos": partidos})
 
 if __name__ == '__main__':
