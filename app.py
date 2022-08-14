@@ -125,17 +125,26 @@ def generate():
 
     # Cantidad de partidos
     partidos = []
+    golpesTotalA = 0 
+    golpesTotalB = 0 
+    golpesTotalC = 0
     for i in range(0, cantidadSimulaciones):
         partidos.append(None)
         sets = []
 
+        golpesTotalPartidoA = 0 
+        golpesTotalPartidoB = 0 
+        golpesTotalPartidoC = 0
         for j in range(0, cantSet):
-            sets.append([])
+            sets.append(None)
             # Datos
             vientoHoyoSetArray = []
             numeroGolpesAList = []
             numeroGolpesBList = []
             numeroGolpesCList = []
+            golpesTotalSetA = 0
+            golpesTotalSetB = 0
+            golpesTotalSetC = 0
             # Rnds
             rndMuchoVientoHoyoArray = []
             rndNumeroGolpesAList = []
@@ -165,10 +174,10 @@ def generate():
                 acumProb = 0
                 for l in range(0, 9):
                     acumProb += probArr[l]
-                    numeroGolpesA = l
+                    numeroGolpesA = l + 1
                     if  acumProb > rndNumeroGolpesA:
                         break
-
+                golpesTotalSetA += numeroGolpesA
                 numeroGolpesAList.append(numeroGolpesA)
 
                 # Calculo jugador B
@@ -183,10 +192,11 @@ def generate():
                 acumProb = 0
                 for l in range(0, 9):
                     acumProb += probArr[l]
-                    numeroGolpesB = l
+                    numeroGolpesB = l + 1
                     if  acumProb > rndNumeroGolpesB:
                         break
-
+                
+                golpesTotalSetB += numeroGolpesB
                 numeroGolpesBList.append(numeroGolpesB)
 
                 # Calculo jugador C
@@ -201,24 +211,63 @@ def generate():
                 acumProb = 0
                 for l in range(0, 9):
                     acumProb += probArr[l]
-                    numeroGolpesC = l
+                    numeroGolpesC = l + 1
                     if  acumProb > rndNumeroGolpesC:
                         break
 
+                golpesTotalSetC += numeroGolpesC
                 numeroGolpesCList.append(numeroGolpesC)
             # Creacion de set
             fila = {
+                "golpesTotalSetA": golpesTotalSetA,
+                "golpesTotalSetB": golpesTotalSetB,
+                "golpesTotalSetC": golpesTotalSetC
+            }
+            for m in range(0,18):
+                s = 'hoyo' + str(m + 1)
+                fila[s] = {}
+                fila[s]['rndMuchoviento'] = rndMuchoVientoHoyoArray[l]
+                fila[s]['vientoHoyoSet'] = vientoHoyoSetArray[l]
+                fila[s]['rndNumeroGolpesA'] = rndNumeroGolpesAList[l]
+                fila[s]['numeroGolpesA'] = numeroGolpesAList[l]
+                fila[s]['rndNumeroGolpesB'] = rndNumeroGolpesBList[l]
+                fila[s]['numeroGolpesB'] = numeroGolpesBList[l]
+                fila[s]['rndNumeroGolpesC'] = rndNumeroGolpesCList[l]
+                fila[s]['numeroGolpesC'] = numeroGolpesCList[l]
+
+            """ fila = {
+                "rndMuchoVientoHoyoArray": rndMuchoVientoHoyoArray,
+                "vientoHoyoSetArray": vientoHoyoSetArray,
                 "rndNumeroGolpesAList": rndNumeroGolpesAList,
                 "numeroGolpesAList": numeroGolpesAList,
                 "rndNumeroGolpesBList": rndNumeroGolpesBList,
                 "numeroGolpesBList": numeroGolpesBList,
                 "rndNumeroGolpesCList": rndNumeroGolpesCList,
                 "numeroGolpesCList": numeroGolpesCList,
+                "golpesTotalSetA": golpesTotalSetA,
+                "golpesTotalSetB": golpesTotalSetB,
+                "golpesTotalSetC": golpesTotalSetC
+            } """
+            golpesTotalPartidoA += golpesTotalSetA
+            golpesTotalPartidoB += golpesTotalSetB
+            golpesTotalPartidoC += golpesTotalSetC
+            sets[j] = fila
+        partidos[i] = {
+            "sets": sets,
+            "golpesTotalPartidoA": golpesTotalPartidoA,
+            "golpesTotalPartidoB": golpesTotalPartidoB,
+            "golpesTotalPartidoC": golpesTotalPartidoC,
             }
-            sets[j].append(fila)
-        partidos[i] = sets
         print(i)
-    return jsonify({"partidos": partidos})
+        golpesTotalA += golpesTotalPartidoA
+        golpesTotalB += golpesTotalPartidoB
+        golpesTotalC += golpesTotalPartidoC
+    return jsonify({
+        "partidos": partidos,
+        "golpesTotalA": golpesTotalA,
+        "golpesTotalB": golpesTotalB,
+        "golpesTotalC": golpesTotalC,
+    })
 
 if __name__ == '__main__':
     app.run()
