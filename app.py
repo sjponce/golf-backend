@@ -221,33 +221,25 @@ def generate():
             fila = {
                 "golpesTotalSetA": golpesTotalSetA,
                 "golpesTotalSetB": golpesTotalSetB,
-                "golpesTotalSetC": golpesTotalSetC
+                "golpesTotalSetC": golpesTotalSetC,
+                "nro": j + 1,
             }
+            hoyos = []
             for m in range(0,18):
-                s = 'hoyo' + str(m + 1)
-                fila[s] = {}
-                fila[s]['rndMuchoviento'] = rndMuchoVientoHoyoArray[l]
-                fila[s]['vientoHoyoSet'] = vientoHoyoSetArray[l]
-                fila[s]['rndNumeroGolpesA'] = rndNumeroGolpesAList[l]
-                fila[s]['numeroGolpesA'] = numeroGolpesAList[l]
-                fila[s]['rndNumeroGolpesB'] = rndNumeroGolpesBList[l]
-                fila[s]['numeroGolpesB'] = numeroGolpesBList[l]
-                fila[s]['rndNumeroGolpesC'] = rndNumeroGolpesCList[l]
-                fila[s]['numeroGolpesC'] = numeroGolpesCList[l]
+                hoyo = {}
+                hoyo['rndMuchoviento'] = rndMuchoVientoHoyoArray[m]
+                hoyo['vientoHoyoSet'] = vientoHoyoSetArray[m]
+                hoyo['rndNumeroGolpesA'] = rndNumeroGolpesAList[m]
+                hoyo['numeroGolpesA'] = numeroGolpesAList[m]
+                hoyo['rndNumeroGolpesB'] = rndNumeroGolpesBList[m]
+                hoyo['numeroGolpesB'] = numeroGolpesBList[m]
+                hoyo['rndNumeroGolpesC'] = rndNumeroGolpesCList[m]
+                hoyo['numeroGolpesC'] = numeroGolpesCList[m]
+                hoyo['nro'] = m + 1
+                hoyos.append(hoyo)
+            
+            fila['hoyos'] = hoyos
 
-            """ fila = {
-                "rndMuchoVientoHoyoArray": rndMuchoVientoHoyoArray,
-                "vientoHoyoSetArray": vientoHoyoSetArray,
-                "rndNumeroGolpesAList": rndNumeroGolpesAList,
-                "numeroGolpesAList": numeroGolpesAList,
-                "rndNumeroGolpesBList": rndNumeroGolpesBList,
-                "numeroGolpesBList": numeroGolpesBList,
-                "rndNumeroGolpesCList": rndNumeroGolpesCList,
-                "numeroGolpesCList": numeroGolpesCList,
-                "golpesTotalSetA": golpesTotalSetA,
-                "golpesTotalSetB": golpesTotalSetB,
-                "golpesTotalSetC": golpesTotalSetC
-            } """
             golpesTotalPartidoA += golpesTotalSetA
             golpesTotalPartidoB += golpesTotalSetB
             golpesTotalPartidoC += golpesTotalSetC
@@ -257,8 +249,8 @@ def generate():
             "golpesTotalPartidoA": golpesTotalPartidoA,
             "golpesTotalPartidoB": golpesTotalPartidoB,
             "golpesTotalPartidoC": golpesTotalPartidoC,
+            "nro": i + 1,
             }
-        print(i)
         golpesTotalA += golpesTotalPartidoA
         golpesTotalB += golpesTotalPartidoB
         golpesTotalC += golpesTotalPartidoC
