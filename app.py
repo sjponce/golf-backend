@@ -237,7 +237,7 @@ def generate():
                 hoyo['numeroGolpesC'] = numeroGolpesCList[m]
                 hoyo['nro'] = m + 1
                 hoyos.append(hoyo)
-            
+
             fila['hoyos'] = hoyos
 
             golpesTotalPartidoA += golpesTotalSetA
